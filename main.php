@@ -13,23 +13,6 @@
     <?php
         include('variables.php');
         include('header.php');
-
-        /* Boucle pour afficher les citations avec les prénoms des utilisateurs
-        foreach ($citations as $citation) {
-            $userEmail = $citation['user'];
-
-            // Vérification si l'email de l'utilisateur existe dans le tableau $users
-            if (array_key_exists($userEmail, $users)) {
-                $userPrenom = $users[$userEmail];
-                echo '<div>';
-                echo '<h3>' . $citation['titre'] . '</h3>';
-                echo '<p>' . $citation['citation'] . '</p>';
-                echo '<p>Par ' . $citation['auteur'] . ', ajoutée par ' . $userPrenom . '</p>';
-                echo '</div>';
-            } else {
-                echo '<p>Utilisateur inconnu pour la citation.</p>';
-            }
-        }*/
     ?>
 
     <main>
@@ -51,8 +34,8 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $citation['titre']; ?></h5>
                             <p class="card-text"><?php echo $citation['citation']; ?></p>
-                            <p class="card-text">Par <?php echo $citation['auteur']; ?>, ajoutée par
-                                <?php echo $userPrenom; ?></p>
+                            <p class="card-text">Auteur : <?php echo $citation['auteur']; ?>
+                            <p class="card-text">Posté par : <?php echo  $userPrenom?>
                         </div>
                     </div>
                 </div>
