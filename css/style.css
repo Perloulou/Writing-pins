@@ -1,0 +1,28 @@
+main {
+    margin: 50px;
+}
+
+.card {
+    width: 50%;
+    max-width: 50%;
+}
+
+
+.container {
+    margin: 5px;
+}
+
+.row {
+    margin-right: 0;
+    /* Supprime la marge à droite de la rangée */
+    margin-left: 0;
+    /* Supprime la marge à gauche de la rangée */
+}
+
+.pin-submit {
+    max-width: 35%;
+}
+
+footer {
+    margin-left: 50px;
+}
