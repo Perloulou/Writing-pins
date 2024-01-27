@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Writ’Pins</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="style.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -13,19 +13,22 @@
     <?php
         include('variables.php');
         include('header.php');
+
+        session_start();
     ?>
 
     <main>
         <div class="container">
             <div class="row">
+                <!-- Récupération de l'email de l'utilisateur pour chaque citation -->
                 <?php foreach ($citations as $citation) {
-                $userEmail = $citation['user'];
+                $mail = $citation['user'];
 
                 // Vérification si l'email de l'utilisateur existe dans le tableau $users
-                if (array_key_exists($userEmail, $users)) {
-                    $userPrenom = $users[$userEmail];
+                if (array_key_exists($mail, $users)) {
+                    $Prenom = $users[$mail];
                 } else {
-                    $userPrenom = "Utilisateur inconnu";
+                    $Prenom = "Utilisateur inconnu";
                 }
     
             ?>
@@ -35,7 +38,7 @@
                             <h5 class="card-title"><?php echo $citation['titre']; ?></h5>
                             <p class="card-text"><?php echo $citation['citation']; ?></p>
                             <p class="card-text">Auteur : <?php echo $citation['auteur']; ?>
-                            <p class="card-text">Posté par : <?php echo  $userPrenom?>
+                            <p class="card-text">Posté par : <?php echo  $Prenom?>
                         </div>
                     </div>
                 </div>
@@ -44,14 +47,10 @@
         </div>
 
 
-        <?php
-            include('form.php');
-        ?>
-
     </main>
 
     <?php 
-    
+    // Inclusion du fichier footer.php pour le contenu du pied de page    
     include('footer.php');
     ?>
 

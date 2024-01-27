@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Footer</title>
-    <style>
-
-    </style>
+    <link href="./css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="footer">
+    <footer>
         <p>© 2023 Writ’Pins. Tous droits réservés.</p>
-    </div>
+    </footer>
 </body>
