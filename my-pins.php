@@ -1,8 +1,11 @@
+<?php
+session_start();
+?>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <title>Writ’Pins</title>
+    <title>Mes pins</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./css/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,12 +16,11 @@
 
 <body>
 
-
-
     <?php
+    include('cookies.php');
+
         include('form.php'); 
     ?>
-
 
     <main>
         <div class="container">
@@ -58,11 +60,13 @@
                         <!-- Formulaire pour ajouter un commentaire -->
                         <?php
                                     // Vérification de l'état de connexion pour afficher le formulaire
-                                    $utilisateurConnecte = true; // Simuler un utilisateur connecté (vous devez adapter cela à votre système d'authentification)
-                                    if ($utilisateurConnecte) { 
-                            ?>
+                        $utilisateurConnecte = true; // Simuler un utilisateur connecté (vous devez adapter cela à votre système d'authentification)
+                        ?>
                         <hr>
+
                         <h6>Ajouter un commentaire :</h6>
+
+                        <?php if ($utilisateurConnecte) { ?>
                         <form action="ajouter_commentaire.php" method="POST">
                             <textarea name="contenu_commentaire" rows="3" placeholder="Ajouter un commentaire..."
                                 required></textarea>

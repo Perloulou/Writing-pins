@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -12,6 +15,7 @@
 
 <body>
     <?php
+        include('cookies.php');
         include('variables.php');
         include('header.php');
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -37,7 +41,7 @@
     ?>
 
     <h2>Inscription</h2>
-    <form method="post" action="php/inscription_process.php">
+    <form method="post" action="inscription_process.php">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
         <br>
@@ -47,7 +51,7 @@
         <label for="mdp">Mot de passe:</label>
         <input type="password" id="mdp" name="mdp" required>
         <br>
-        <input type="submit" name="Inscription" value="S'inscrire">
+        <input type="submit" name="Inscription" value="S'inscrire" class="btn-inscription">
     </form>
     <p>Déjà inscrit? <a href="login3.php">Connectez-vous ici</a></p>
 </body>

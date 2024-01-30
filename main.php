@@ -1,3 +1,18 @@
+<?php
+session_start();
+$moi = "";
+// Vérifiez si l'utilisateur est connecté
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+
+    // Vérifiez si l'email de l'utilisateur existe dans le tableau $users
+    if (array_key_exists($email, $users)) {
+        $moi = "(moi)";
+    } else {
+        $moi = "Utilisateur inconnu";
+    }
+} 
+?>
 <html lang="fr">
 
 <head>
@@ -11,34 +26,33 @@
 
 <body>
     <?php
+        include('cookies.php');
         include('variables.php');
         include('header.php');
-
-        session_start();
     ?>
-
     <main>
         <div class="container">
             <div class="row">
                 <!-- Récupération de l'email de l'utilisateur pour chaque citation -->
                 <?php foreach ($citations as $citation) {
-                $mail = $citation['user'];
+                $email = $citation['user'];
 
                 // Vérification si l'email de l'utilisateur existe dans le tableau $users
-                if (array_key_exists($mail, $users)) {
-                    $Prenom = $users[$mail];
+                if (array_key_exists($email, $users)) {
                 } else {
-                    $Prenom = "Utilisateur inconnu";
+                $Prenom = "Utilisateur inconnu";
                 }
-    
-            ?>
+
+                ?>
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $citation['titre']; ?></h5>
                             <p class="card-text"><?php echo $citation['citation']; ?></p>
                             <p class="card-text">Auteur : <?php echo $citation['auteur']; ?>
-                            <p class="card-text">Posté par : <?php echo  $Prenom?>
+                            <p class="card-text">Posté par : <?php  echo  $users[$citation['user']], "<br>";?>
+                                <?php echo $moi; ?>
+
                         </div>
                     </div>
                 </div>

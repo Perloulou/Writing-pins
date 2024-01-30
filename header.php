@@ -10,7 +10,7 @@
 
     <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Writ’Pins</a>
+            <a class="navbar-brand" href="main.php">Writ’Pins</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,13 +21,13 @@
                         <a class="nav-link active" aria-current="page" href="main.php">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login3.php">Se connecter</a>
+                        <a class="nav-link" id="loginLink" href="login3.php">Se connecter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./my-pins.php">Mes épingles</a>
+                        <a class="nav-link" href="my-pins.php">Mes épingles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./php/form-deconnexion.php">Deconnexion</a>
+                        <a class="nav-link" href="form-deconnexion.php">Deconnexion</a>
                     </li>
 
                 </ul>
@@ -48,14 +48,31 @@
         });
     });
 
-    const isConnected = true; // Mettez à jour cette variable selon l'état de connexion de l'utilisateur
 
-    $(document).ready(function() {
-        if (isConnected) {
-            // Si l'utilisateur est connecté, changez le lien "Se connecter" par le nom et la photo de profil
-            $('#loginLink').html(
-                `<a class="nav-link" href="#">Nom Utilisateur <img src="chemin/vers/photo.jpg" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%;"> </a>`
-            );
+    $.ajax({
+        url: 'utilisateurs.json',
+        dataType: 'json',
+        success: function(utilisateurs) {
+            /*console.log(utilisateurs);*/
+            const isConnected = <?php echo isset($_SESSION['utilisateur']) ? 'true' : 'false'; ?>;
+
+            // Vérifier si l'utilisateur est connecté
+            if (isConnected) {
+                // Récupérer les informations de l'utilisateur (ici, le premier utilisateur est utilisé à titre d'exemple)
+                const connectedUtilisateurs = utilisateurs[0];
+
+                // Mettre à jour la barre de menu avec le nom et la photo de profil de l'utilisateur
+                $('#loginLink').html(
+                    `<li class="nav-item"><a class="nav-link" href="#">${connectedUtilisateurs.prenom} <img src="chemin/vers/photo.jpg" style="width: 30px;  border-radius: 50%;"></a></li>`
+                );
+            } else {
+                // Si l'utilisateur n'est pas connecté, afficher le lien "Se connecter"
+                $('#loginLink').html(
+                    '<li class="nav-item"><a class="nav-link" href="login3.php">Se connecter</a></li>');
+            }
+        },
+        error: function(error) {
+            console.error('Erreur lors de la récupération des utilisateurs :', error);
         }
     });
     </script>

@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    include('cookies.php');
+    include('variables.php');
+    include('header.php');
+?>
 <html lang="fr">
 
 <head>
@@ -10,26 +16,9 @@
 </head>
 
 <body>
-    <?php
-
-        include('variables.php');
-        include('header.php');
-
-    ?>
-
     <main>
-        <?php
-
-        /*if (!isset($_POST['titre']) || !isset($_POST['citation']) || !isset($_POST['auteur']))
-        {
-            echo('Il faut un titre, une citation et un auteur pour soumettre le formulaire.');
-            
-            // Arrête l'exécution de PHP
-            return;
-        
-        }*/
-
-        
+        <?php /*
+   
         // Vérification si les champs sont vides avant de traiter le formulaire
         if (empty($_POST['titre']) || empty($_POST['citation']) || empty($_POST['auteur'])) {
             echo('Il faut un titre, une citation et un auteur pour soumettre le formulaire.');
@@ -78,9 +67,65 @@
             echo '<h3>Erreur !</h3>';
             echo '<p>Champs du formulaires manquants.</p>';
             echo '</div>';
+        }*/
+
+    if (!isset($_SESSION['email'])) {
+        // L'utilisateur n'est pas connecté, rediriger vers la page de connexion par exemple
+        header('Location: login3.php');
+    exit();
+}
+    // Vérification si les champs sont vides avant de traiter le formulaire
+        if (empty($_POST['titre']) || empty($_POST['citation']) || empty($_POST['auteur'])) {
+            echo('Il faut un titre, une citation et un auteur pour soumettre le formulaire.');
+
+            // Arrête l'exécution de PHP
+            return;
         }
 
-    ?>
+        // Récupération des données du formulaire
+        $titre = strip_tags($_POST['titre']);
+        $citation = strip_tags($_POST['citation']);
+        $auteur = strip_tags($_POST['auteur']);
+
+        // Vérification des longueurs des valeurs passées
+        if (strlen($titre) <= 40 && strlen($citation) <= 200 && strlen($auteur) <= 40) {
+            // Ajouter la nouvelle épingle à la liste des épingles
+            $nouvelleEpingle = array(
+                "titre" => $titre,
+                "citation" => $citation,
+                "auteur" => $auteur,
+                "user" => $_SESSION['email']  // Utiliser l'email de l'utilisateur connecté depuis la session
+            );
+
+            // Ajouter la nouvelle épingle à la liste des épingles
+            array_push($citations, $nouvelleEpingle);
+
+            // Mettre à jour variables.php
+            file_put_contents('variables.php', '<?php $citations = ' . var_export($citations, true) . '; ?>');
+
+        // Affichage du message de succès avec le récapitulatif de la carte créée
+        echo '<div>';
+            echo '<h3>Formulaire bien reçu !</h3>';
+            echo '<h5 class="card-title">Récapitulatif de la pin</h5>';
+            echo '<div class="card">
+                <div class="card-body">';
+                    echo '<p><strong>Titre :</strong> ' . $titre . '</p>';
+                    echo '<p><strong>Citation :</strong> ' . $citation . '</p>';
+                    echo '<p><strong>Auteur :</strong> ' . $auteur . '</p>';
+                    echo '</div>
+            </div>';
+            echo '</div>';
+
+        // Lien pour revenir à la page my-pins.php
+        echo '<a href="my-pins.php">Retour à la page My Pins</a>';
+        } else {
+        // Les paramètres ne sont pas valides, affichage du message d'erreur
+        echo '<div>';
+            echo '<h3>Erreur !</h3>';
+            echo '<p>Les valeurs dépassent les limites autorisées.</p>';
+            echo '</div>';
+        }
+        ?>
     </main>
 
     <footer>
